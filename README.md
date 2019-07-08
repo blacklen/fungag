@@ -7,7 +7,7 @@
 - instal postgres
 
 
-cd 9gag.com
+cd funny
 
 edit your settings.py file to connect to the new database.
 
