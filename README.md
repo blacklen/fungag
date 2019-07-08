@@ -1,4 +1,4 @@
-- git clone https://gitlab.com/tutran985/9gag.com.git
+- git clone https://gitlab.com/tutran985/funnygag.git
 
 
 
