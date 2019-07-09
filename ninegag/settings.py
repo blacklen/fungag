@@ -149,9 +149,9 @@ WSGI_APPLICATION = 'ninegag.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': '9gag',
+        'NAME': 'funnygag',
         'USER': 'postgres',
-        'PASSWORD': '10101997',
+        'PASSWORD': 'lam851995',
         'HOST': 'localhost',
         'PORT' : '5432'
     }
