@@ -8,7 +8,7 @@ from sections.models import Sections
 class Post(models.Model):
     slug = models.SlugField(max_length=150, blank= True, null=True)
     title = models.CharField(max_length=250, blank= True, null=True)
-    image = models.ImageField(upload_to='images/%Y/%m/%d', max_length=254, blank=True, null=True)
+    image = models.ImageField(upload_to='images/%Y/%m/%d', max_length=254)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     users_like = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='posts_liked', blank= True)

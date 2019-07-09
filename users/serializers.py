@@ -28,6 +28,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         # del validated_data["confirm_password"]
         # return super(UserRegistrationSerializer, self).create(validated_data)
 
+    
     # def validate_email(self, value):
     #     if not re.search(r"^[\w\.\+\-]+\@[\w]+\.[a-z]{2,3}$", value):
     #         raise ParseError({"error_code":"400_EMAIL","message":"mail k dung dinh dang"})
