@@ -1,4 +1,4 @@
-- git clone https://gitlab.com/tutran985/9gag.com.git
+- git clone https://gitlab.com/tutran985/funnygag.git
 
 
 
@@ -7,7 +7,7 @@
 - instal postgres
 
 
-cd 9gag.com
+cd funny
 
 edit your settings.py file to connect to the new database.
 
