@@ -61,6 +61,24 @@ class Users_Like(APIView):
         }
         return Response(data,status=status.HTTP_200_OK)
 
+class List_Posts_Category(ListAPIView):
+    serializer_class = PostSerializers
+    permission_classes = (AllowAny,)
+    pagination_class = StandardResultsSetPagination
+
+    def get(self, request, pk):
+        category_posts = Post.objects.filter(category= pk).order_by('-created_at')
+        paginate_queryset = self.paginate_queryset(category_posts)
+        serializer = self.serializer_class(paginate_queryset, many=True)
+
+        paginate_data = self.get_paginated_response(serializer.data)
+        data = {
+            "error_code":0,
+            "massage" : "success",
+            "data" : paginate_data.data
+        }
+
+        return Response(data, status=status.HTTP_200_OK)
 class List_Posts_User(ListAPIView):
     serializer_class = PostSerializers
     permission_classes = (IsAuthenticated,)

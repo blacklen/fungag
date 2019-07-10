@@ -53,7 +53,6 @@ class Detail(APIView):
             raise ParseError({"error_code" : 400, "message" : "Not Found", "data":[]})
         else:
             serializer = CategorysSerializers(category)
-            
             data = {
                 "error_code" : 0,
                 "message" : "get category success",
