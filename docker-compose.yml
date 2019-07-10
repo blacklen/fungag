@@ -19,8 +19,17 @@ services:
       POSTGRES_PASSWORD: '10101997'
       POSTGRES_DB: '9gag'
 
-  adminer:
-    image: adminer
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
+  
+  jenkins:
+    image: jenkins
     restart: always
     ports:
-      - 8080:8080
+      - "8080:8080"
+      - "5000:5000"
+    volumes:
+      - .:/var/jenkins_home

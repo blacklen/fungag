@@ -152,7 +152,7 @@ DATABASES = {
         'NAME': '9gag',
         'USER': 'postgres',
         'PASSWORD': '10101997',
-        'HOST': 'localhost',
+        'HOST': 'db',
         'PORT' : '5432'
     }
 }
