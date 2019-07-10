@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from .models import Sections
+from .models import Categorys
 from django.contrib.auth.models import User
-from .serializers import SectionsSerializers
+from .serializers import CategorysSerializers
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView, GenericAPIView, CreateAPIView
 from rest_framework.response import Response
@@ -18,13 +18,13 @@ from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
 
 class List(ListAPIView):
-    serializer_class = SectionsSerializers
+    serializer_class = CategorysSerializers
     pagination_class = StandardResultsSetPagination
     permission_classes = (AllowAny,)
 
     def get(self, request):
-        sections = Sections.objects.all().order_by('-name')
-        paginate_queryset = self.paginate_queryset(sections)   
+        categorys = Categorys.objects.all().order_by('-name')
+        paginate_queryset = self.paginate_queryset(categorys)   
         serializer = self.serializer_class(paginate_queryset, many= True)
         paginate_data = self.get_paginated_response(serializer.data)
         data = {
@@ -35,46 +35,46 @@ class List(ListAPIView):
         return Response(data, status=status.HTTP_200_OK)
 
 class Detail(APIView):
-    serializer_class = SectionsSerializers
+    serializer_class = CategorysSerializers
     permission_classes = (AllowAny,)
 
     def get_queryset(self, pk):
         try:
-            section = Sections.objects.get(pk = pk)
+            category = Categorys.objects.get(pk = pk)
         except ObjectDoesNotExist:
-            section = None
-        return section
+            category = None
+        return category
     
     
     def get(self, request, pk):
-        section = self.get_queryset(pk)
+        category = self.get_queryset(pk)
 
-        if not section:
+        if not category:
             raise ParseError({"error_code" : 400, "message" : "Not Found", "data":[]})
         else:
-            serializer = SectionsSerializers(section)
+            serializer = CategorysSerializers(category)
             
             data = {
                 "error_code" : 0,
-                "message" : "get section success",
+                "message" : "get category success",
                 "data" : serializer.data
             }
             return Response(data, status= status.HTTP_200_OK)
 
 class Create(CreateAPIView):
-    serializer_class = SectionsSerializers
+    serializer_class = CategorysSerializers
     pagination_class = StandardResultsSetPagination
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self, request):
         try:
-            name = Sections.objects.get(name=request.data.get('name'))
+            name = Categorys.objects.get(name=request.data.get('name'))
         except ObjectDoesNotExist:
             name = None
         return name
 
     @swagger_auto_schema(
-        operation_description="them moi section", 
+        operation_description="them moi category", 
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
             required=['name','logo'],
@@ -95,33 +95,33 @@ class Create(CreateAPIView):
         name = self.get_queryset(request)
         if not name:
             if request.user and request.user.is_superuser == True:
-                serializer = SectionsSerializers(data = request.data)
+                serializer = CategorysSerializers(data = request.data)
                 if serializer.is_valid():
                     serializer.save()
                     data_all = {
                         "error_code" : 0,
-                        "message" : "create sections success",
+                        "message" : "create categorys success",
                         "data" : serializer.data
                     }
                     return Response(data_all, status=status.HTTP_201_CREATED)
             else:
                 raise ParseError({"error_code" : '401_SUPERUSER', "message" : "UNAUTHORIZED",})
         else:
-            raise ParseError({"error_code":"400_NAME_EXIST","message":"section da ton tai"})
+            raise ParseError({"error_code":"400_NAME_EXIST","message":"category da ton tai"})
        
 class Update_Delete(GenericAPIView):
-    serializer_class = SectionsSerializers
+    serializer_class = CategorysSerializers
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self, pk):
         try:
-            section = Sections.objects.get(pk = pk)
-        except section.DoesNotExist:
+            category = Categorys.objects.get(pk = pk)
+        except category.DoesNotExist:
             raise ParseError({"error_code" : 400, "message" : "Not Found", "data":[]})
-        return section
+        return category
 
     @swagger_auto_schema(
-        operation_description="chinh sua section", 
+        operation_description="chinh sua category", 
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
             required=['id','name','logo'],
@@ -139,36 +139,36 @@ class Update_Delete(GenericAPIView):
         ],
     )
     def put(self, request, pk):
-        section = self.get_queryset(pk)
+        category = self.get_queryset(pk)
         if request.user and request.user.is_superuser == True:
             try:
-                name = Sections.objects.get(name=request.data.get('name'))
+                name = Categorys.objects.get(name=request.data.get('name'))
             except ObjectDoesNotExist:
                 name = None
             
             if not name: 
-                serializer = SectionsSerializers(section, data=request.data)
+                serializer = CategorysSerializers(category, data=request.data)
 
                 if serializer.is_valid():
                     serializer.save()
                     data_all = {
                         "error_code" : 0,
-                        "message" : "update section success",
+                        "message" : "update category success",
                         "data" : serializer.data
 
                     }
                     return Response(data_all, status=status.HTTP_201_CREATED)
             else:
-                raise ParseError({"error_code":"400_NAME_EXIST","message":"section da ton tai"})
+                raise ParseError({"error_code":"400_NAME_EXIST","message":"category da ton tai"})
         else:
             raise ParseError({"error_code" : '401_SUPERUSER', "message" : "UNAUTHORIZED",})
     
     def delete(self, request, pk):
-        section = self.get_queryset(pk)
+        category = self.get_queryset(pk)
         
         if request.user and request.user.is_superuser == True:
 
-            section.delete()
+            category.delete()
             data = {
                 "error_code": 0,
                 "message" : "delete success",

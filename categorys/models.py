@@ -3,11 +3,11 @@ from django.conf import settings
 from django.utils.text import slugify
 # Create your models here.
 
-class Sections(models.Model):
+class Categorys(models.Model):
     name = models.CharField(max_length=100, unique= True)
     title = models.CharField(max_length=100, blank= True, null=True)
     slug = models.CharField(max_length=100, blank= True, null=True)
-    logo = models.ImageField(upload_to='images/sections/logo', max_length=254)
+    logo = models.ImageField(upload_to='images/categorys/logo', max_length=254)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -20,4 +20,4 @@ class Sections(models.Model):
     def save(self, *args, **kwargs):
         if self.name:
             self.slug = slugify(self.name)
-        super(Sections, self).save( *args, **kwargs)
+        super(Categorys, self).save( *args, **kwargs)

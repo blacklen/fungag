@@ -109,18 +109,18 @@ class Create_Posts(APIView):
         operation_description="them moi bai viet", 
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
-            required=['title','image','section'],
+            required=['title','image','category'],
             properties={
                 'title': openapi.Schema(type=openapi.TYPE_STRING),
                 'image': openapi.Schema(type=openapi.TYPE_FILE),
-                'section': openapi.Schema(type=openapi.TYPE_INTEGER),
+                'category': openapi.Schema(type=openapi.TYPE_INTEGER),
             },
         ),
         security=[],
         manual_parameters=[
             openapi.Parameter('title', openapi.IN_QUERY, "test query title", type=openapi.TYPE_STRING),
             openapi.Parameter('image', openapi.IN_QUERY, "test query image", type=openapi.TYPE_FILE),
-            openapi.Parameter('section', openapi.IN_QUERY, "test query section", type=openapi.TYPE_INTEGER),
+            openapi.Parameter('category', openapi.IN_QUERY, "test query category", type=openapi.TYPE_INTEGER),
         ],
     )
     def post(self, request):
@@ -151,19 +151,19 @@ class Update_Delete_Post(GenericAPIView):
         operation_description="chinh sua bai viet", 
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
-            required=['title','image','section'],
+            required=['title','image','category'],
             properties={
                 'id': openapi.Schema(type=openapi.TYPE_INTEGER),
                 'title': openapi.Schema(type=openapi.TYPE_STRING),
                 'image': openapi.Schema(type=openapi.TYPE_FILE),
-                'section': openapi.Schema(type=openapi.TYPE_INTEGER),
+                'category': openapi.Schema(type=openapi.TYPE_INTEGER),
             },
         ),
         security=[],
         manual_parameters=[
             openapi.Parameter('title', openapi.IN_QUERY, "test query title", type=openapi.TYPE_STRING),
             openapi.Parameter('image', openapi.IN_QUERY, "test query image", type=openapi.TYPE_FILE),
-            openapi.Parameter('section', openapi.IN_QUERY, "test query section", type=openapi.TYPE_INTEGER),
+            openapi.Parameter('category', openapi.IN_QUERY, "test query category", type=openapi.TYPE_INTEGER),
         ],
     )
     def put(self, request, pk):

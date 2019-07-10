@@ -2,15 +2,15 @@ from rest_framework import serializers
 from .models import Post
 from django.contrib.auth.models import User
 from rest_framework.exceptions import ParseError
-from sections.models import Sections
+from categorys.models import Categorys
 
 class PostSerializers(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source='author.name')
     users_like = serializers.PrimaryKeyRelatedField(queryset= User.objects.all(), many=True)
-    section = serializers.PrimaryKeyRelatedField(queryset=Sections.objects.all())
+    category = serializers.PrimaryKeyRelatedField(queryset=Categorys.objects.all())
     class Meta:
         model = Post
-        fields = ('id', 'title', 'image', 'author', 'section' ,'users_like', 'created_at','updated_at')
+        fields = ('id', 'title', 'image', 'author', 'category' ,'users_like', 'created_at','updated_at')
 
     def validate(self, attrs):
         if not attrs.get('title') and not attrs.get('image'):

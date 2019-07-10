@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
     'post.apps.PostConfig',
-    'sections.apps.SectionsConfig',
+    'categorys.apps.CategorysConfig',
     #  Django Rest Framework
     'rest_framework',
     'rest_framework.authtoken',
