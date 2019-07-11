@@ -135,17 +135,6 @@ WSGI_APPLICATION = 'ninegag.wsgi.application'
 #     }
 # }
 
-# Docker
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': '9gag',
-#         'USER': 'postgres',
-#         'PASSWORD': '10101997',
-#         'HOST': 'db',
-#         'PORT' : '5432'
-#     }
-# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
