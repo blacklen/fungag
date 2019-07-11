@@ -3,6 +3,7 @@ version: "3"
 services:
   web:
     build: . # se tim den file Dockerfile
+    container_name: intern-web
     command: python manage.py runserver 0.0.0.0:8000
     restart: always
     volumes:
@@ -14,6 +15,7 @@ services:
   
   db:
     image: postgres
+    container_name: intern-db
     restart: always
     environment:
       POSTGRES_PASSWORD: '10101997'
@@ -21,6 +23,7 @@ services:
   
   jenkins:
     build: ./jenkins
+    container_name: intern-jenkins
     restart: always
     ports:
       - "8298:8080"
