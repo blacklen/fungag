@@ -92,6 +92,8 @@ class Create(CreateAPIView):
     )
     def post(self, request):
         name = self.get_queryset(request)
+        if not request.data.get('name') or not request.data.get('logo'):
+            raise ParseError({"error_code" : '400_EMPTY', "message" : "name or logo is empty",})
         if not name:
             if request.user and request.user.is_superuser == True:
                 serializer = CategorysSerializers(data = request.data)

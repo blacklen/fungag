@@ -13,12 +13,10 @@ class PostSerializers(serializers.ModelSerializer):
         fields = ('id', 'title', 'image', 'author', 'category' ,'users_like', 'created_at','updated_at')
 
     def validate(self, attrs):
-        if not attrs.get('title') and not attrs.get('image'):
-            raise ParseError({
-                "error_code" : 4000,
-                "message" : "Khong duoc de trong ca 2 truong image va title"
-
-            })
+        if not attrs.get('title'): raise ParseError({"error_code" : '400_EMPTYD',"message" : "Title khong duoc de trong"})
+        if not attrs.get('image'): raise ParseError({"error_code" : '400_EMPTYD',"message" : "Image khong duoc de trong"})
+        if not attrs.get('category'): raise ParseError({"error_code" : '400_EMPTYD',"message" : "Category khong duoc de trong"})
+        
         return attrs
 
 class UserSerializers(serializers.ModelSerializer):
