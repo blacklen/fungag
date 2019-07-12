@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '-cszl4oka%$6!(_k+7f_l!@_+h0c&po5n4^&tydoai%h9yz@iu'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['27.72.88.246']
 
@@ -47,6 +47,9 @@ INSTALLED_APPS = [
     # Django Rest Swagger cua drf-yasg
     # https://github.com/axnsan12/drf-yasg/
     'drf_yasg',
+
+    # CORS
+    'corsheaders',
    
 ]
 
@@ -102,6 +105,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+]
+
+CORS_ORIGIN_WHITELIST  =  [ 
+    "http: // localhost:3000" , 
+    "http://127.0.0.1:3000" 
 ]
 
 ROOT_URLCONF = 'ninegag.urls'
