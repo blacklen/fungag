@@ -35,7 +35,7 @@ class UserRegistrationAPIView(CreateAPIView):
       
         token, created = Token.objects.get_or_create(user=user)
         data = serializer.data
-        data["token"] = token.key
+        data["auth_token"] = token.key
 
         headers = self.get_success_headers(serializer.data)
 
