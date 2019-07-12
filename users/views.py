@@ -53,25 +53,25 @@ class UserLoginAPIView(GenericAPIView):
 
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data, context={'request': request})
-        if serializer.is_valid():
-            user = serializer.validated_data['user']
-            token, _ = Token.objects.get_or_create(user=user)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, _ = Token.objects.get_or_create(user=user)
 
-            data= TokenSerializer(token).data
+        data= TokenSerializer(token).data
 
-            # data_user = {'username' : user.username,'email' : user.email}
-            data_user = {'username' : user.username,}
-            data_user.update(data)
-            
-            data_all = {
-                "error_code":0,
-                "messages": "login success",
-                "data": data_user
-            }
-            return Response(
-                data=data_all,
-                status=status.HTTP_200_OK,
-            )
+        # data_user = {'username' : user.username,'email' : user.email}
+        data_user = {'username' : user.username,}
+        data_user.update(data)
+        
+        data_all = {
+            "error_code":0,
+            "messages": "login success",
+            "data": data_user
+        }
+        return Response(
+            data=data_all,
+            status=status.HTTP_200_OK,
+        )
 
 class GetToken(ObtainAuthToken):
 
