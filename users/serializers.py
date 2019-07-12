@@ -25,22 +25,6 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
-        # del validated_data["confirm_password"]
-        # return super(UserRegistrationSerializer, self).create(validated_data)
-
-    
-    # def validate_email(self, value):
-    #     if not re.search(r"^[\w\.\+\-]+\@[\w]+\.[a-z]{2,3}$", value):
-    #         raise ParseError({"error_code":"400_EMAIL","message":"mail k dung dinh dang"})
-        
-    #     try:
-    #         email = User.objects.get(email=value)
-    #     except ObjectDoesNotExist:
-    #         email = None
-        
-    #     if email:
-    #         raise ParseError({"error_code":"400_EMAIL_EXIST","message":"mail da ton tai"})
-    #     return value
 
     def validate(self, attrs):
         if attrs.get('password') != attrs.get('confirm_password'):
