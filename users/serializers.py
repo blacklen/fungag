@@ -29,9 +29,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         if attrs.get('password') != attrs.get('confirm_password'):
             raise ParseError({"error_code":"400_PASSWORD","message":"2 mat khau khong giong nhau"})
-        
-        if not attrs.get('password') or not attrs.get('username'):
-            raise ParseError({"error_code":"400_PASSWORD_USER","message":"username va password khong duoc de trong"})
+    
         return attrs
 
 
@@ -50,6 +48,7 @@ class UserLoginSerializer(serializers.Serializer):
 
     def validate(self, attrs):
         self.user = authenticate(username=attrs.get("username"), password=attrs.get('password'))
+        
         if self.user:
             if not self.user.is_active:
                 raise ParseError({
@@ -62,6 +61,9 @@ class UserLoginSerializer(serializers.Serializer):
                 "error_code":"400_INVALID_CREDENTIALS",
                 "message":self.default_error_messages['invalid_credentials'],
             })
+
+        return attrs
+        
 
 
 class TokenSerializer(serializers.ModelSerializer):

@@ -10,6 +10,7 @@ from drf_yasg import openapi
 from drf_yasg.app_settings import swagger_settings
 from drf_yasg.inspectors import CoreAPICompatInspector, FieldInspector, NotHandled, SwaggerAutoSchema
 from drf_yasg.utils import no_body, swagger_auto_schema
+from rest_framework.exceptions import ParseError
 
 class Logout(APIView):
     def get(self, request, fromat=None):
@@ -52,26 +53,29 @@ class UserLoginAPIView(GenericAPIView):
     serializer_class = UserLoginSerializer
 
     def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data, context={'request': request})
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
-        token, _ = Token.objects.get_or_create(user=user)
+        if not request.data.get('password') or not request.data.get('username'):
+            raise ParseError({"error_code":"400_PASSWORD_USER","message":"username va password khong duoc de trong"})
 
-        data= TokenSerializer(token).data
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.user
+            token, _ = Token.objects.get_or_create(user=user)
 
-        # data_user = {'username' : user.username,'email' : user.email}
-        data_user = {'username' : user.username,}
-        data_user.update(data)
-        
-        data_all = {
-            "error_code":0,
-            "messages": "login success",
-            "data": data_user
-        }
-        return Response(
-            data=data_all,
-            status=status.HTTP_200_OK,
-        )
+            data= TokenSerializer(token).data
+
+            # data_user = {'username' : user.username,'email' : user.email}
+            data_user = {'username' : user.username,}
+            data_user.update(data)
+            
+            data_all = {
+                "error_code":0,
+                "messages": "login success",
+                "data": data_user
+            }
+            return Response(
+                data=data_all,
+                status=status.HTTP_200_OK,
+            )
 
 class GetToken(ObtainAuthToken):
 
@@ -80,9 +84,8 @@ class GetToken(ObtainAuthToken):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
-        
         return Response({
             'token': token.key,
             'user_id': user.pk,
-            'email': user.email
+            # 'email': user.email
         })
