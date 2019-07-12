@@ -45,6 +45,9 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         if attrs.get('password') != attrs.get('confirm_password'):
             raise ParseError({"error_code":"400_PASSWORD","message":"2 mat khau khong giong nhau"})
+        
+        if not attrs.get('password') or not attrs.get('username'):
+            raise ParseError({"error_code":"400_PASSWORD_USER","message":"username va password khong duoc de trong"})
         return attrs
 
 
