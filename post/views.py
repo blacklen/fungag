@@ -68,6 +68,7 @@ class List_Posts_Category(ListAPIView):
 
     @swagger_auto_schema(
         operation_description="Danh sach post theo category", 
+        operation_id="category_id"
     )
     def get(self, request, pk):
         category_posts = Post.objects.filter(category= pk).order_by('-created_at')
