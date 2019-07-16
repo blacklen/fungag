@@ -7,7 +7,7 @@ from categorys.models import Categorys
 
 class Post(models.Model):
     slug = models.SlugField(max_length=150, blank= True, null=True)
-    title = models.CharField(max_length=250, blank= True, null=True)
+    title = models.CharField(max_length=250, blank= True, null=True,)
     image = models.ImageField(upload_to='images/%Y/%m/%d', max_length=254)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -20,7 +20,7 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
-    
+
     def save(self, *args, **kwargs):
         if self.title:
             stri = self.title[0:50]

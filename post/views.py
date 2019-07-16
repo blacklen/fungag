@@ -151,10 +151,6 @@ class Create_Posts(APIView):
         ],
     )
     def post(self, request):
-        if not request.data.get('title'): raise ParseError({"error_code" : '400_EMPTYD',"message" : "Title khong duoc de trong"})
-        if not request.data.get('image'): raise ParseError({"error_code" : '400_EMPTYD',"message" : "Image khong duoc de trong"})
-        if not request.data.get('category'): raise ParseError({"error_code" : '400_EMPTYD',"message" : "Category khong duoc de trong"})
-            
         serializer = PostSerializers(data = request.data)
 
         if serializer.is_valid():
@@ -166,7 +162,9 @@ class Create_Posts(APIView):
 
             }
             return Response(data_all, status=status.HTTP_201_CREATED)
-
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
 class Update_Delete_Post(GenericAPIView):
     serializer_class = PostSerializers
     permission_classes = (IsAuthenticated,)
@@ -213,6 +211,8 @@ class Update_Delete_Post(GenericAPIView):
 
                 }
                 return Response(data_all, status=status.HTTP_201_CREATED)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
             raise ParseError({"error_code" : 401, "message" : "UNAUTHORIZED", "data":[]})
 
