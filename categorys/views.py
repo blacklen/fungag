@@ -19,7 +19,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 class List(ListAPIView):
     serializer_class = CategorysSerializers
-    pagination_class = StandardResultsSetPagination
+    # pagination_class = StandardResultsSetPagination
     permission_classes = (AllowAny,)
 
     def get(self, request):
