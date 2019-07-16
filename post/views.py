@@ -151,6 +151,10 @@ class Create_Posts(APIView):
         ],
     )
     def post(self, request):
+        if not request.data.get('title'): raise ParseError({"error_code" : '400_EMPTYD',"message" : "Title khong duoc de trong"})
+        if not request.data.get('image'): raise ParseError({"error_code" : '400_EMPTYD',"message" : "Image khong duoc de trong"})
+        if not request.data.get('category'): raise ParseError({"error_code" : '400_EMPTYD',"message" : "Category khong duoc de trong"})
+            
         serializer = PostSerializers(data = request.data)
 
         if serializer.is_valid():
