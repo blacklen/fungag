@@ -55,7 +55,7 @@ urlpatterns = [
     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
 
     path('post/', include('post.urls')),
-    path('category/', include('category.urls')),
+    path('categorys/', include('categorys.urls')),
     # url Simple JWT TOKEN
     # url(r'^api/token/$', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     # url(r'^api/token/refresh/$', TokenRefreshView.as_view(), name='token_refresh'),
