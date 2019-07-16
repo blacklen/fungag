@@ -19,13 +19,13 @@ from django.core.exceptions import ObjectDoesNotExist
 
 class List(ListAPIView):
     serializer_class = CategorysSerializers
-    pagination_class = StandardResultsSetPagination
+    # pagination_class = StandardResultsSetPagination
     permission_classes = (AllowAny,)
 
     def get(self, request):
         categorys = Categorys.objects.all().order_by('-name')
-        paginate_queryset = self.paginate_queryset(categorys)   
-        serializer = self.serializer_class(paginate_queryset, many= True)
+        # paginate_queryset = self.paginate_queryset(categorys)   
+        serializer = self.serializer_class(categorys, many= True)
         paginate_data = self.get_paginated_response(serializer.data)
         data = {
             "error_code":0,
@@ -137,6 +137,7 @@ class Update_Delete(GenericAPIView):
             openapi.Parameter('name', openapi.IN_QUERY, "name", type=openapi.TYPE_STRING),
             openapi.Parameter('title', openapi.IN_QUERY, "title", type=openapi.TYPE_STRING),
             openapi.Parameter('logo', openapi.IN_QUERY, "logo", type=openapi.TYPE_FILE),
+            openapi.Parameter('id', openapi.IN_QUERY, "category_id", type=openapi.TYPE_INTEGER, required=True),
         ],
     )
     def put(self, request, pk):
@@ -163,7 +164,16 @@ class Update_Delete(GenericAPIView):
                 raise ParseError({"error_code":"400_NAME_EXIST","message":"category da ton tai"})
         else:
             raise ParseError({"error_code" : '401_SUPERUSER', "message" : "UNAUTHORIZED",})
-    
+
+
+    @swagger_auto_schema(
+        operation_description="xoa bai viet", 
+        operation_id="category_id",
+
+        manual_parameters=[
+            openapi.Parameter('id', openapi.IN_QUERY, "category_id", type=openapi.TYPE_INTEGER, required=True),
+        ]
+    )
     def delete(self, request, pk):
         category = self.get_queryset(pk)
         
