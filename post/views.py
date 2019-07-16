@@ -70,14 +70,14 @@ class List_Posts_Category(ListAPIView):
         operation_description="Danh sach post theo category", 
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
-            required=['category_id'],
+            required=['category'],
             properties={
-                'category_id': openapi.Schema(type=openapi.TYPE_INTEGER),
+                'category': openapi.Schema(type=openapi.TYPE_INTEGER),
             },
         ),
         security=[],
         manual_parameters=[
-            openapi.Parameter('category_id', openapi.IN_QUERY, "test query category", type=openapi.TYPE_INTEGER),
+            openapi.Parameter('category', openapi.IN_QUERY, "test query category", type=openapi.TYPE_INTEGER),
         ],
     )
     def get(self, request, pk):
