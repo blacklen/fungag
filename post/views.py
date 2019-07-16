@@ -246,6 +246,14 @@ class Get_Deatail_Post(APIView):
             raise ParseError({"error_code" : 400, "message" : "Not Found", "data":[]})
         return post
     
+    @swagger_auto_schema(
+        operation_description="chi tiet bai viet", 
+        operation_id="post_id",
+
+        manual_parameters=[
+            openapi.Parameter('id', openapi.IN_QUERY, "post_id", type=openapi.TYPE_INTEGER, required=True),
+        ]
+    )
     def get(self, request, pk):
         post = self.get_queryset(pk)
 
