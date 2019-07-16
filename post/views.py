@@ -69,13 +69,7 @@ class List_Posts_Category(ListAPIView):
     @swagger_auto_schema(
         operation_description="Danh sach post theo category", 
         operation_id="category_id",
-        request_body=openapi.Schema(
-            type=openapi.TYPE_OBJECT,
-            required=['id'],
-            properties={
-                'id': openapi.Schema(type=openapi.TYPE_INTEGER)
-            },
-        ),
+        
         manual_parameters=[
             openapi.Parameter('id', openapi.IN_QUERY, "category_id", type=openapi.TYPE_INTEGER),
         ]
