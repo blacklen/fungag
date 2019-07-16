@@ -19,18 +19,15 @@ from django.core.exceptions import ObjectDoesNotExist
 
 class List(ListAPIView):
     serializer_class = CategorysSerializers
-    # pagination_class = StandardResultsSetPagination
     permission_classes = (AllowAny,)
 
     def get(self, request):
         categorys = Categorys.objects.all().order_by('-name')
-        # paginate_queryset = self.paginate_queryset(categorys)   
         serializer = self.serializer_class(categorys, many= True)
-        paginate_data = self.get_paginated_response(serializer.data)
         data = {
             "error_code":0,
             "massage" : "success",
-            "data" : paginate_data.data
+            "data" : serializer.data
         }
         return Response(data, status=status.HTTP_200_OK)
 
