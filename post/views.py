@@ -68,7 +68,10 @@ class List_Posts_Category(ListAPIView):
 
     @swagger_auto_schema(
         operation_description="Danh sach post theo category", 
-        operation_id="category_id"
+        operation_id="category_id",
+        manual_parameters=[
+            openapi.Parameter('category', openapi.IN_QUERY, "category_id", type=openapi.TYPE_INTEGER),
+        ]
     )
     def get(self, request, pk):
         category_posts = Post.objects.filter(category= pk).order_by('-created_at')
