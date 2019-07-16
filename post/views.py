@@ -67,12 +67,16 @@ class List_Posts_Category(ListAPIView):
     pagination_class = StandardResultsSetPagination
 
     @swagger_auto_schema(
-        operation_description="Danh sach post theo category", 
-        operation_id="category_id",
-        
-        manual_parameters=[
-            openapi.Parameter('id', openapi.IN_QUERY, "category_id", type=openapi.TYPE_INTEGER),
-        ]
+        operation_id='Danh sach post theo category',
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                'id': openapi.Schema(
+                    type=openapi.TYPE_INTEGER,
+                    description='category_id'
+                )
+            }
+        ),
     )
     def get(self, request, pk):
         category_posts = Post.objects.filter(category= pk).order_by('-created_at')
