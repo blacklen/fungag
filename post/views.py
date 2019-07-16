@@ -174,6 +174,7 @@ class Update_Delete_Post(GenericAPIView):
             raise ParseError({"error_code" : 400, "message" : "Not Found", "data":[]})
         return post
 
+    
     @swagger_auto_schema(
         operation_description="chinh sua bai viet", 
         request_body=openapi.Schema(
@@ -191,6 +192,7 @@ class Update_Delete_Post(GenericAPIView):
             openapi.Parameter('title', openapi.IN_QUERY, "test query title", type=openapi.TYPE_STRING),
             openapi.Parameter('image', openapi.IN_QUERY, "test query image", type=openapi.TYPE_FILE),
             openapi.Parameter('category', openapi.IN_QUERY, "test query category", type=openapi.TYPE_INTEGER),
+            openapi.Parameter('id', openapi.IN_QUERY, "post_id", type=openapi.TYPE_INTEGER, required=True),
         ],
     )
     def put(self, request, pk):
@@ -210,6 +212,14 @@ class Update_Delete_Post(GenericAPIView):
         else:
             raise ParseError({"error_code" : 401, "message" : "UNAUTHORIZED", "data":[]})
 
+    @swagger_auto_schema(
+        operation_description="xoa bai viet", 
+        operation_id="post_id",
+
+        manual_parameters=[
+            openapi.Parameter('id', openapi.IN_QUERY, "post_id", type=openapi.TYPE_INTEGER, required=True),
+        ]
+    )
     def delete(self, request, pk):
         post = self.get_queryset(pk)
         
