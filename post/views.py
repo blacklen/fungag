@@ -71,7 +71,10 @@ class List_Posts_Category(ListAPIView):
         operation_id="category_id",
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
-            required=['id',],
+            required=['id'],
+            properties={
+                'id': openapi.Schema(type=openapi.TYPE_INTEGER)
+            },
         ),
         manual_parameters=[
             openapi.Parameter('id', openapi.IN_QUERY, "category_id", type=openapi.TYPE_INTEGER),
