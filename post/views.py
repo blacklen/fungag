@@ -70,7 +70,7 @@ class List_Posts_Category(ListAPIView):
         operation_description="Danh sach post theo category", 
         operation_id="category_id",
         manual_parameters=[
-            openapi.Parameter('category', openapi.IN_QUERY, "category_id", type=openapi.TYPE_INTEGER),
+            openapi.Parameter('id', openapi.IN_QUERY, "category_id", type=openapi.TYPE_INTEGER),
         ]
     )
     def get(self, request, pk):
