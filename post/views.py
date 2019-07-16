@@ -66,6 +66,20 @@ class List_Posts_Category(ListAPIView):
     permission_classes = (AllowAny,)
     pagination_class = StandardResultsSetPagination
 
+    @swagger_auto_schema(
+        operation_description="Danh sach post theo category", 
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=['category_id'],
+            properties={
+                'category_id': openapi.Schema(type=openapi.TYPE_INTEGER),
+            },
+        ),
+        security=[],
+        manual_parameters=[
+            openapi.Parameter('category_id', openapi.IN_QUERY, "test query category", type=openapi.TYPE_INTEGER),
+        ],
+    )
     def get(self, request, pk):
         category_posts = Post.objects.filter(category= pk).order_by('-created_at')
         paginate_queryset = self.paginate_queryset(category_posts)
