@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5674e730-2b58-4dcb-9bc0-c9f788f77257" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ninegag/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/ninegag/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,11 +15,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ninegag/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="27" column="17" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
+            <state relative-caret-position="165">
+              <caret line="161" column="7" lean-forward="true" selection-start-line="161" selection-start-column="7" selection-end-line="161" selection-end-column="7" />
               <folding>
                 <element signature="e#308#317#0" expanded="true" />
               </folding>
@@ -29,10 +27,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/users/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
+            <state relative-caret-position="390">
               <caret line="86" column="62" selection-start-line="86" selection-start-column="62" selection-end-line="86" selection-end-column="62" />
               <folding>
                 <element signature="e#0#33#0" expanded="true" />
@@ -85,8 +83,8 @@
         <option value="$PROJECT_DIR$/post/views.py" />
         <option value="$PROJECT_DIR$/post/urls.py" />
         <option value="$PROJECT_DIR$/post/serializers.py" />
-        <option value="$PROJECT_DIR$/ninegag/settings.py" />
         <option value="$PROJECT_DIR$/users/views.py" />
+        <option value="$PROJECT_DIR$/ninegag/settings.py" />
       </list>
     </option>
   </component>
@@ -192,18 +190,18 @@
       <updated>1562658998319</updated>
       <workItem from="1562658999699" duration="4612000" />
       <workItem from="1562837934673" duration="73000" />
-      <workItem from="1563435642428" duration="2540000" />
+      <workItem from="1563435642428" duration="2575000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7225000" />
+    <option name="totallyTimeSpent" value="7260000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1600" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25225225" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25225225" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -217,7 +215,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5006435" side_tool="true" weight="0.3297587" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.4993565" visible="true" weight="0.3300423" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.4993565" visible="true" weight="0.3300423" />
       <window_info anchor="bottom" id="Python Console" order="12" />
       <window_info anchor="right" id="Jenkins" />
       <window_info anchor="right" id="JWT" />
@@ -301,22 +299,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ninegag/settings.py">
+    <entry file="file://$PROJECT_DIR$/users/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="27" column="17" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
+        <state relative-caret-position="390">
+          <caret line="86" column="62" selection-start-line="86" selection-start-column="62" selection-end-line="86" selection-end-column="62" />
           <folding>
-            <element signature="e#308#317#0" expanded="true" />
+            <element signature="e#0#33#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/users/views.py">
+    <entry file="file://$PROJECT_DIR$/ninegag/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="86" column="62" selection-start-line="86" selection-start-column="62" selection-end-line="86" selection-end-column="62" />
+        <state relative-caret-position="165">
+          <caret line="161" column="7" lean-forward="true" selection-start-line="161" selection-start-column="7" selection-end-line="161" selection-end-column="7" />
           <folding>
-            <element signature="e#0#33#0" expanded="true" />
+            <element signature="e#308#317#0" expanded="true" />
           </folding>
         </state>
       </provider>
