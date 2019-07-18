@@ -18,11 +18,18 @@ class Logout(APIView):
     def get(self, request, fromat=None):
         request.user.auth_token.delete()
 
+        
         data = {
             "error_code": 0,
             "messages": "logout success",
         }
-        return Response(data, status=status.HTTP_200_OK)
+        response = Response(
+            data=data,
+            status=status.HTTP_200_OK,
+        )
+        if request.COOKIES.get('token'):
+            response.delete_cookie("token")
+        return response
 
 
 class UserRegistrationAPIView(CreateAPIView):
@@ -81,9 +88,10 @@ class UserLoginAPIView(GenericAPIView):
                 data=data_all,
                 status=status.HTTP_200_OK,
             )
-            expires = datetime.datetime.strftime(datetime.datetime.now() + datetime.timedelta(seconds=1000000),
-                                                 "%a, %d-%b-%Y %H:%M:%S GMT")
-            response.set_cookie('token', token, expires=expires)
+            tomorrow = datetime.datetime.now() + datetime.timedelta(days = 1)
+            tomorrow = datetime.datetime.replace(tomorrow, hour=0, minute=0, second=0)
+            expires = datetime.datetime.strftime(tomorrow, "%a, %d-%b-%Y %H:%M:%S GMT")
+            response.set_cookie('token', token, expires=expires,httponly=True)
             return response
 
             # return Response(data_all,status=status.HTTP_200_OK)
