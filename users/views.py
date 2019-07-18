@@ -4,9 +4,9 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.generics import CreateAPIView, GenericAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from django.http import HttpResponse
+# from django.http import HttpResponse
 from users.serializers import UserRegistrationSerializer, UserLoginSerializer, TokenSerializer
-from datetime import datetime, timedelta
+import datetime
 from drf_yasg import openapi
 from drf_yasg.app_settings import swagger_settings
 from drf_yasg.inspectors import CoreAPICompatInspector, FieldInspector, NotHandled, SwaggerAutoSchema
@@ -77,14 +77,16 @@ class UserLoginAPIView(GenericAPIView):
                 "messages": "login success",
                 "data": data_user
             }
-            # response = HttpResponse(
-            #     data=data_all,
-            #     status=status.HTTP_200_OK,
-            # )
-            # response.set_cookie(key=user.id, value=token, max_age=30, httponly=True)
-            # return response
+            response = Response(
+                data=data_all,
+                status=status.HTTP_200_OK,
+            )
+            expires = datetime.datetime.strftime(datetime.datetime.now() + datetime.timedelta(seconds=1000000),
+                                                 "%a, %d-%b-%Y %H:%M:%S GMT")
+            response.set_cookie('token', token, expires=expires)
+            return response
 
-            return Response(data_all,status=status.HTTP_200_OK)
+            # return Response(data_all,status=status.HTTP_200_OK)
 
 
 class GetToken(ObtainAuthToken):
