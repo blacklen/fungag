@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http import HttpResponse
 from users.serializers import UserRegistrationSerializer, UserLoginSerializer, TokenSerializer
-
+from datetime import datetime
 from drf_yasg import openapi
 from drf_yasg.app_settings import swagger_settings
 from drf_yasg.inspectors import CoreAPICompatInspector, FieldInspector, NotHandled, SwaggerAutoSchema
@@ -17,6 +17,7 @@ from rest_framework.exceptions import ParseError
 class Logout(APIView):
     def get(self, request, fromat=None):
         request.user.auth_token.delete()
+
         data = {
             "error_code": 0,
             "messages": "logout success",
@@ -80,7 +81,7 @@ class UserLoginAPIView(GenericAPIView):
                 data=data_all,
                 status=status.HTTP_200_OK,
             )
-            response.set_cookie(key=user.id, value=token, expires=1000000000, httponly=True)
+            response.set_cookie(key=user.id, value=token, expires=datetime.now()+10000000000, httponly=True)
             return response
 
 
