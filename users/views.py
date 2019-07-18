@@ -77,7 +77,7 @@ class UserLoginAPIView(GenericAPIView):
                 "messages": "login success",
                 "data": data_user
             }
-            response = HttpResponse(
+            response = Response(
                 data=data_all,
                 status=status.HTTP_200_OK,
             )
