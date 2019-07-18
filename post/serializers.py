@@ -5,7 +5,7 @@ from rest_framework.exceptions import ParseError
 from categorys.models import Categorys
 
 class PostSerializers(serializers.ModelSerializer):
-    author = serializers.ReadOnlyField(source='author.name')
+    author = serializers.ReadOnlyField(source='author.username')
     users_like = serializers.PrimaryKeyRelatedField(queryset= User.objects.all(), many=True)
     category = serializers.PrimaryKeyRelatedField(queryset=Categorys.objects.all())
     class Meta:
