@@ -4,6 +4,7 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.generics import CreateAPIView, GenericAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.http import HttpResponse
 from users.serializers import UserRegistrationSerializer, UserLoginSerializer, TokenSerializer
 
 from drf_yasg import openapi
@@ -75,10 +76,12 @@ class UserLoginAPIView(GenericAPIView):
                 "messages": "login success",
                 "data": data_user
             }
-            return Response(
+            response = HttpResponse(
                 data=data_all,
                 status=status.HTTP_200_OK,
             )
+            response.set_cookie(key=user.id, value=token, expires=1000000000, httponly=True)
+            return response
 
 
 class GetToken(ObtainAuthToken):
