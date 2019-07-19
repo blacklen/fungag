@@ -12,9 +12,9 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 from datetime import timedelta
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -25,8 +25,8 @@ SECRET_KEY = '-cszl4oka%$6!(_k+7f_l!@_+h0c&po5n4^&tydoai%h9yz@iu'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['27.72.88.246',]
+ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['27.72.88.246',]
 
 
 # Application definition
@@ -51,7 +51,7 @@ INSTALLED_APPS = [
 
     # CORS
     'corsheaders',
-   
+
 ]
 
 REST_FRAMEWORK = {
@@ -59,14 +59,14 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',  # <-- And here Token mặc định
         # 'rest_framework_simplejwt.authentication.JWTAuthentication', # <-- Simple JWT Token
     ],
-    
+
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated', # <-- cai dat quyen mac dinh
+        'rest_framework.permissions.IsAuthenticated',  # <-- cai dat quyen mac dinh
     ],
 
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     # 'PAGE_SIZE': 3,
-    'EXCEPTION_HANDLER': 'custom_exceptions.exceptions.custom_exception_handler',  
+    'EXCEPTION_HANDLER': 'custom_exceptions.exceptions.custom_exception_handler',
     'DEFAULT_PAGINATION_CLASS': 'apps.core.pagination.StandardResultsSetPagination',
 
 }
@@ -140,7 +140,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ninegag.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
@@ -156,10 +155,10 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': '9gag',
         'USER': 'postgres',
-        'PASSWORD': '10101997',
-        'HOST': 'db',
-        # 'HOST': 'localhost',
-        'PORT' : '5432'
+        'PASSWORD': 'lam851995',
+        # 'HOST': 'db',
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
 }
 
@@ -181,7 +180,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -195,12 +193,10 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
 
 # Media
 MEDIA_URL = '/media/'

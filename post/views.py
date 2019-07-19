@@ -14,6 +14,8 @@ from drf_yasg import openapi
 from drf_yasg.app_settings import swagger_settings
 from drf_yasg.inspectors import CoreAPICompatInspector, FieldInspector, NotHandled, SwaggerAutoSchema
 from drf_yasg.utils import no_body, swagger_auto_schema
+
+
 # Create your views here.
 
 class Users_Like(APIView):
@@ -22,16 +24,16 @@ class Users_Like(APIView):
 
     def get_queryset(self, pk):
         try:
-            post = Post.objects.get(pk = pk)
+            post = Post.objects.get(pk=pk)
         except Post.DoesNotExist:
-            raise ParseError({"error_code" : 400, "message" : "Not Found", "data":[]})
+            raise ParseError({"error_code": 400, "message": "Not Found", "data": []})
         return post
 
     @swagger_auto_schema(
-        operation_description="unlike/like bai viet", 
+        operation_description="unlike/like bai viet",
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
-            required=['post_id','action'],
+            required=['post_id', 'action'],
             properties={
                 'post_id': openapi.Schema(type=openapi.TYPE_INTEGER),
                 'action': openapi.Schema(type=openapi.TYPE_STRING),
@@ -51,15 +53,16 @@ class Users_Like(APIView):
                 elif action == "unlike" or int(action) == 0:
                     post.users_like.remove(request.user)
             else:
-                {"error_code" : 401, "message" : "Vui long dang nhap"}
+                {"error_code": 401, "message": "Vui long dang nhap"}
         else:
-            {"error_code" : 400, "message" : "Bai viet khong ton tai",}
+            {"error_code": 400, "message": "Bai viet khong ton tai", }
 
         data = {
-            "error_code":0,
-            "massage" : "success",
+            "error_code": 0,
+            "massage": "success",
         }
-        return Response(data,status=status.HTTP_200_OK)
+        return Response(data, status=status.HTTP_200_OK)
+
 
 class List_Posts_Category(ListAPIView):
     serializer_class = PostSerializers
@@ -67,45 +70,47 @@ class List_Posts_Category(ListAPIView):
     pagination_class = StandardResultsSetPagination
 
     @swagger_auto_schema(
-        operation_description="Danh sach post theo category", 
+        operation_description="Danh sach post theo category",
         operation_id="category_id",
 
         manual_parameters=[
             openapi.Parameter('id', openapi.IN_QUERY, "category_id", type=openapi.TYPE_INTEGER, required=True),
         ]
     )
-    
     def get(self, request, pk):
-        category_posts = Post.objects.filter(category= pk).order_by('-created_at')
+        category_posts = Post.objects.filter(category=pk).order_by('-created_at')
         paginate_queryset = self.paginate_queryset(category_posts)
         serializer = self.serializer_class(paginate_queryset, many=True)
 
         paginate_data = self.get_paginated_response(serializer.data)
         data = {
-            "error_code":0,
-            "massage" : "success",
-            "data" : paginate_data.data
+            "error_code": 0,
+            "massage": "success",
+            "data": paginate_data.data
         }
 
         return Response(data, status=status.HTTP_200_OK)
+
+
 class List_Posts_User(ListAPIView):
     serializer_class = PostSerializers
     permission_classes = (IsAuthenticated,)
     pagination_class = StandardResultsSetPagination
 
-    def get(self, request):
+    def get(self, request,pk):
         author_posts = Post.objects.filter(author=request.user).order_by('-created_at')
         paginate_queryset = self.paginate_queryset(author_posts)
         serializer = self.serializer_class(paginate_queryset, many=True)
 
         paginate_data = self.get_paginated_response(serializer.data)
         data = {
-            "error_code":0,
-            "massage" : "success",
-            "data" : paginate_data.data
+            "error_code": 0,
+            "massage": "success",
+            "data": paginate_data.data
         }
 
         return Response(data, status=status.HTTP_200_OK)
+
 
 class List_Publish_Posts(ListAPIView):
     serializer_class = PostSerializers
@@ -114,15 +119,16 @@ class List_Publish_Posts(ListAPIView):
 
     def get(self, request):
         posts = Post.objects.all().order_by('-created_at')
-        paginate_queryset = self.paginate_queryset(posts)   
-        serializer = self.serializer_class(paginate_queryset, many= True)
+        paginate_queryset = self.paginate_queryset(posts)
+        serializer = self.serializer_class(paginate_queryset, many=True)
         paginate_data = self.get_paginated_response(serializer.data)
         data = {
-            "error_code":0,
-            "massage" : "success",
-            "data" : paginate_data.data
+            "error_code": 0,
+            "massage": "success",
+            "data": paginate_data.data
         }
         return Response(data, status=status.HTTP_200_OK)
+
 
 class Create_Posts(APIView):
     serializer_class = PostSerializers
@@ -133,10 +139,10 @@ class Create_Posts(APIView):
         return posts
 
     @swagger_auto_schema(
-        operation_description="them moi bai viet", 
+        operation_description="them moi bai viet",
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
-            required=['title','image','category'],
+            required=['title', 'image', 'category'],
             properties={
                 'title': openapi.Schema(type=openapi.TYPE_STRING),
                 'image': openapi.Schema(type=openapi.TYPE_FILE),
@@ -151,37 +157,37 @@ class Create_Posts(APIView):
         ],
     )
     def post(self, request):
-        serializer = PostSerializers(data = request.data)
+        serializer = PostSerializers(data=request.data)
 
         if serializer.is_valid():
-            serializer.save(author = request.user)
+            serializer.save(author=request.user)
             data_all = {
-                "error_code" : 0,
-                "message" : "create post success",
-                "data" : serializer.data
+                "error_code": 0,
+                "message": "create post success",
+                "data": serializer.data
 
             }
             return Response(data_all, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
+
+
 class Update_Delete_Post(GenericAPIView):
     serializer_class = PostSerializers
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self, pk):
         try:
-            post = Post.objects.get(pk = pk)
+            post = Post.objects.get(pk=pk)
         except Post.DoesNotExist:
-            raise ParseError({"error_code" : 400, "message" : "Not Found", "data":[]})
+            raise ParseError({"error_code": 400, "message": "Not Found", "data": []})
         return post
 
-    
     @swagger_auto_schema(
-        operation_description="chinh sua bai viet", 
+        operation_description="chinh sua bai viet",
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
-            required=['title','image','category'],
+            required=['title', 'image', 'category'],
             properties={
                 'id': openapi.Schema(type=openapi.TYPE_INTEGER),
                 'title': openapi.Schema(type=openapi.TYPE_STRING),
@@ -205,19 +211,19 @@ class Update_Delete_Post(GenericAPIView):
             if serializer.is_valid():
                 serializer.save()
                 data_all = {
-                    "error_code" : 0,
-                    "message" : "update post success",
-                    "data" : serializer.data
+                    "error_code": 0,
+                    "message": "update post success",
+                    "data": serializer.data
 
                 }
                 return Response(data_all, status=status.HTTP_201_CREATED)
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
-            raise ParseError({"error_code" : 401, "message" : "UNAUTHORIZED", "data":[]})
+            raise ParseError({"error_code": 401, "message": "UNAUTHORIZED", "data": []})
 
     @swagger_auto_schema(
-        operation_description="xoa bai viet", 
+        operation_description="xoa bai viet",
         operation_id="post_id",
 
         manual_parameters=[
@@ -226,18 +232,19 @@ class Update_Delete_Post(GenericAPIView):
     )
     def delete(self, request, pk):
         post = self.get_queryset(pk)
-        
+
         if request.user == post.author:
 
             post.delete()
             data = {
                 "error_code": 0,
-                "message" : "delete success",
-                "data" : []
+                "message": "delete success",
+                "data": []
             }
             return Response(data, status=status.HTTP_204_NO_CONTENT)
         else:
-            raise ParseError({"error_code" : 401, "message" : "UNAUTHORIZED", "data":[]})
+            raise ParseError({"error_code": 401, "message": "UNAUTHORIZED", "data": []})
+
 
 class Get_Deatail_Post(APIView):
     serializer_class = PostSerializers
@@ -245,13 +252,13 @@ class Get_Deatail_Post(APIView):
 
     def get_queryset(self, pk):
         try:
-            post = Post.objects.get(pk = pk)
+            post = Post.objects.get(pk=pk)
         except Post.DoesNotExist:
-            raise ParseError({"error_code" : 400, "message" : "Not Found", "data":[]})
+            raise ParseError({"error_code": 400, "message": "Not Found", "data": []})
         return post
-    
+
     @swagger_auto_schema(
-        operation_description="chi tiet bai viet", 
+        operation_description="chi tiet bai viet",
         operation_id="post_id",
 
         manual_parameters=[
@@ -262,10 +269,10 @@ class Get_Deatail_Post(APIView):
         post = self.get_queryset(pk)
 
         serializer = PostSerializers(post)
-        
+
         data = {
-            "error_code" : 0,
-            "message" : "get post success",
-            "data" : serializer.data
+            "error_code": 0,
+            "message": "get post success",
+            "data": serializer.data
         }
-        return Response(data, status= status.HTTP_200_OK)
+        return Response(data, status=status.HTTP_200_OK)
