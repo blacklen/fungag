@@ -8,13 +8,14 @@ from rest_framework.authtoken.models import Token
 
 from rest_framework.exceptions import ParseError
 
+
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     confirm_password = serializers.CharField(write_only=True)
 
     class Meta:
         model = User
-        fields = ("id", "username",  "password", "confirm_password")
+        fields = ("id", "username", "password", "confirm_password")
 
     def create(self, validated_data):
         user = User.objects.create(
@@ -28,8 +29,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         if attrs.get('password') != attrs.get('confirm_password'):
-            raise ParseError({"error_code":"400_PASSWORD","message":"2 mat khau khong giong nhau"})
-    
+            raise ParseError({"error_code": "400_PASSWORD", "message": "2 mat khau khong giong nhau"})
+
         return attrs
 
 
@@ -48,22 +49,21 @@ class UserLoginSerializer(serializers.Serializer):
 
     def validate(self, attrs):
         self.user = authenticate(username=attrs.get("username"), password=attrs.get('password'))
-        
+
         if self.user:
             if not self.user.is_active:
                 raise ParseError({
-                    "error_code":"400_INACTIVE_ACCOUNT",
-                    "message":self.default_error_messages['inactive_account'],
+                    "error_code": "400_INACTIVE_ACCOUNT",
+                    "message": self.default_error_messages['inactive_account'],
                 })
             return attrs
         else:
             raise ParseError({
-                "error_code":"400_INVALID_CREDENTIALS",
-                "message":self.default_error_messages['invalid_credentials'],
+                "error_code": "400_INVALID_CREDENTIALS",
+                "message": self.default_error_messages['invalid_credentials'],
             })
 
         return attrs
-        
 
 
 class TokenSerializer(serializers.ModelSerializer):

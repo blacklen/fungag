@@ -8,8 +8,4 @@ urlpatterns = [
     # path('detail/<int:pk>/', views.Detail.as_view(), name='get-detail-categorys'),
     path('update-delete/<int:pk>/', views.Update_Delete.as_view(), name='update-delete-categorys'),
 
-    
-    
-    
-   
 ]

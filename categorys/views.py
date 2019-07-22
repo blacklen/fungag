@@ -15,6 +15,7 @@ from drf_yasg.inspectors import CoreAPICompatInspector, FieldInspector, NotHandl
 from drf_yasg.utils import no_body, swagger_auto_schema
 from django.core.exceptions import ObjectDoesNotExist
 
+
 # Create your views here.
 
 class List(ListAPIView):
@@ -23,13 +24,14 @@ class List(ListAPIView):
 
     def get(self, request):
         categorys = Categorys.objects.all().order_by('-name')
-        serializer = self.serializer_class(categorys, many= True)
+        serializer = self.serializer_class(categorys, many=True)
         data = {
-            "error_code":0,
-            "massage" : "success",
-            "data" : serializer.data
+            "error_code": 0,
+            "massage": "success",
+            "data": serializer.data
         }
         return Response(data, status=status.HTTP_200_OK)
+
 
 class Detail(APIView):
     serializer_class = CategorysSerializers
@@ -37,25 +39,25 @@ class Detail(APIView):
 
     def get_queryset(self, pk):
         try:
-            category = Categorys.objects.get(pk = pk)
+            category = Categorys.objects.get(pk=pk)
         except ObjectDoesNotExist:
             category = None
         return category
-    
-    
+
     def get(self, request, pk):
         category = self.get_queryset(pk)
 
         if not category:
-            raise ParseError({"error_code" : 400, "message" : "Not Found", "data":[]})
+            raise ParseError({"error_code": 400, "message": "Not Found", "data": []})
         else:
             serializer = CategorysSerializers(category)
             data = {
-                "error_code" : 0,
-                "message" : "get category success",
-                "data" : serializer.data
+                "error_code": 0,
+                "message": "get category success",
+                "data": serializer.data
             }
-            return Response(data, status= status.HTTP_200_OK)
+            return Response(data, status=status.HTTP_200_OK)
+
 
 class Create(CreateAPIView):
     serializer_class = CategorysSerializers
@@ -70,10 +72,10 @@ class Create(CreateAPIView):
         return name
 
     @swagger_auto_schema(
-        operation_description="them moi category", 
+        operation_description="them moi category",
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
-            required=['name','logo'],
+            required=['name', 'logo'],
             properties={
                 'name': openapi.Schema(type=openapi.TYPE_STRING),
                 'title': openapi.Schema(type=openapi.TYPE_STRING),
@@ -90,39 +92,40 @@ class Create(CreateAPIView):
     def post(self, request):
         name = self.get_queryset(request)
         if not request.data.get('name') or not request.data.get('logo'):
-            raise ParseError({"error_code" : '400_EMPTY', "message" : "name or logo is empty",})
+            raise ParseError({"error_code": '400_EMPTY', "message": "name or logo is empty", })
         if not name:
             if request.user and request.user.is_superuser == True:
-                serializer = CategorysSerializers(data = request.data)
+                serializer = CategorysSerializers(data=request.data)
                 if serializer.is_valid():
                     serializer.save()
                     data_all = {
-                        "error_code" : 0,
-                        "message" : "create categorys success",
-                        "data" : serializer.data
+                        "error_code": 0,
+                        "message": "create categorys success",
+                        "data": serializer.data
                     }
                     return Response(data_all, status=status.HTTP_201_CREATED)
             else:
-                raise ParseError({"error_code" : '401_SUPERUSER', "message" : "UNAUTHORIZED",})
+                raise ParseError({"error_code": '401_SUPERUSER', "message": "UNAUTHORIZED", })
         else:
-            raise ParseError({"error_code":"400_NAME_EXIST","message":"category da ton tai"})
-       
+            raise ParseError({"error_code": "400_NAME_EXIST", "message": "category da ton tai"})
+
+
 class Update_Delete(GenericAPIView):
     serializer_class = CategorysSerializers
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self, pk):
         try:
-            category = Categorys.objects.get(pk = pk)
+            category = Categorys.objects.get(pk=pk)
         except category.DoesNotExist:
-            raise ParseError({"error_code" : 400, "message" : "Not Found", "data":[]})
+            raise ParseError({"error_code": 400, "message": "Not Found", "data": []})
         return category
 
     @swagger_auto_schema(
-        operation_description="chinh sua category", 
+        operation_description="chinh sua category",
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
-            required=['id','name','logo'],
+            required=['id', 'name', 'logo'],
             properties={
                 'name': openapi.Schema(type=openapi.TYPE_STRING),
                 'title': openapi.Schema(type=openapi.TYPE_STRING),
@@ -144,27 +147,26 @@ class Update_Delete(GenericAPIView):
                 name = Categorys.objects.get(name=request.data.get('name'))
             except ObjectDoesNotExist:
                 name = None
-            
-            if not name: 
+
+            if not name:
                 serializer = CategorysSerializers(category, data=request.data)
 
                 if serializer.is_valid():
                     serializer.save()
                     data_all = {
-                        "error_code" : 0,
-                        "message" : "update category success",
-                        "data" : serializer.data
+                        "error_code": 0,
+                        "message": "update category success",
+                        "data": serializer.data
 
                     }
                     return Response(data_all, status=status.HTTP_201_CREATED)
             else:
-                raise ParseError({"error_code":"400_NAME_EXIST","message":"category da ton tai"})
+                raise ParseError({"error_code": "400_NAME_EXIST", "message": "category da ton tai"})
         else:
-            raise ParseError({"error_code" : '401_SUPERUSER', "message" : "UNAUTHORIZED",})
-
+            raise ParseError({"error_code": '401_SUPERUSER', "message": "UNAUTHORIZED", })
 
     @swagger_auto_schema(
-        operation_description="xoa bai viet", 
+        operation_description="xoa bai viet",
         operation_id="category_id",
 
         manual_parameters=[
@@ -173,15 +175,15 @@ class Update_Delete(GenericAPIView):
     )
     def delete(self, request, pk):
         category = self.get_queryset(pk)
-        
+
         if request.user and request.user.is_superuser == True:
 
             category.delete()
             data = {
                 "error_code": 0,
-                "message" : "delete success",
-                "data" : []
+                "message": "delete success",
+                "data": []
             }
             return Response(data, status=status.HTTP_204_NO_CONTENT)
         else:
-            raise ParseError({"error_code" : 401, "message" : "UNAUTHORIZED", "data":[]})
+            raise ParseError({"error_code": 401, "message": "UNAUTHORIZED", "data": []})

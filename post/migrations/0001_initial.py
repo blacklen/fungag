@@ -6,7 +6,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -24,9 +23,12 @@ class Migration(migrations.Migration):
                 ('image', models.ImageField(max_length=254, upload_to='images/%Y/%m/%d')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='author', to=settings.AUTH_USER_MODEL)),
-                ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='category', to='categorys.Categorys')),
-                ('users_like', models.ManyToManyField(blank=True, related_name='posts_liked', to=settings.AUTH_USER_MODEL)),
+                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='author',
+                                             to=settings.AUTH_USER_MODEL)),
+                ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='category',
+                                               to='categorys.Categorys')),
+                ('users_like',
+                 models.ManyToManyField(blank=True, related_name='posts_liked', to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'ordering': ('-created_at',),
