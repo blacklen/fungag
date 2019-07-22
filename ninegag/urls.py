@@ -31,29 +31,29 @@ from rest_framework.authtoken.views import obtain_auth_token  # <-- Here
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-schema_view = get_schema_view(
-   openapi.Info(
-      title="Django API",
-      default_version='v1',
-      description="Test description",
-      terms_of_service="https://www.google.com/policies/terms/",
-      contact=openapi.Contact(email="contact@snippets.local"),
-      license=openapi.License(name="BSD License"),
-   ),
-   public=True,
-   permission_classes=(permissions.AllowAny,),
-)
 
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Django API",
+        default_version='v1',
+        description="Test description",
+        terms_of_service="https://www.google.com/policies/terms/",
+        contact=openapi.Contact(email="contact@snippets.local"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('register/', UserRegistrationAPIView.as_view(), name="register"),
-    path('register/', UserRegistrationAPIView.as_view(), name="register"),
-    path('login/', UserLoginAPIView.as_view(), name="login"),
-    path('logout/', Logout.as_view(), name='logout'),
+    # path('register/', UserRegistrationAPIView.as_view(), name="register"),
+    # path('login/', UserLoginAPIView.as_view(), name="login"),
+    # path('logout/', Logout.as_view(), name='logout'),
     path('get-token/', GetToken.as_view()),
     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
-
+    path('user/', include('users.urls')),
     path('post/', include('post.urls')),
     path('categorys/', include('categorys.urls')),
     # url Simple JWT TOKEN
@@ -67,7 +67,6 @@ urlpatterns = [
 
 ]
 
-
 # Theo cách này, Django sẽ chịu trách nhiệm phục vụ các tệp phương tiện trong quá trình phát triển (DEBUG = True).
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

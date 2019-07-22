@@ -97,7 +97,7 @@ class List_Posts_User(ListAPIView):
     permission_classes = (IsAuthenticated,)
     pagination_class = StandardResultsSetPagination
 
-    def get(self, request,pk):
+    def get(self, request, pk):
         author_posts = Post.objects.filter(author=request.user).order_by('-created_at')
         paginate_queryset = self.paginate_queryset(author_posts)
         serializer = self.serializer_class(paginate_queryset, many=True)
