@@ -26,9 +26,6 @@ SECRET_KEY = '-cszl4oka%$6!(_k+7f_l!@_+h0c&po5n4^&tydoai%h9yz@iu'
 DEBUG = True
 
 # ALLOWED_HOSTS = []nothing to commit, working directory cleanSwitched to branch 'master'
-Your branch and 'origin/master' have diverged,
-and have 1 and 5 different commits each, respectively.
-  (use "git pull" to merge the remote branch into yours)
 
 
 ALLOWED_HOSTS = ['27.72.88.246',]
