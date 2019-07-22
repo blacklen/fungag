@@ -40,6 +40,10 @@ class Users_Like(APIView):
             },
         ),
         security=[],
+        responses={
+            400: openapi.Response('400 : Bai viet khong ton tai'),
+            401: openapi.Response('401 : Vui long dang nhap'),
+        }
     )
     def post(self, request):
         post_id = request.data.get('post_id')
@@ -75,7 +79,10 @@ class List_Posts_Category(ListAPIView):
 
         manual_parameters=[
             openapi.Parameter('id', openapi.IN_QUERY, "category_id", type=openapi.TYPE_INTEGER, required=True),
-        ]
+        ],
+        responses={
+            404: openapi.Response('404 : Not Found'),
+        }
     )
     def get(self, request, pk):
         category_posts = Post.objects.filter(category=pk).order_by('-created_at')
@@ -202,6 +209,9 @@ class Update_Delete_Post(GenericAPIView):
             openapi.Parameter('category', openapi.IN_QUERY, "test query category", type=openapi.TYPE_INTEGER),
             openapi.Parameter('id', openapi.IN_QUERY, "post_id", type=openapi.TYPE_INTEGER, required=True),
         ],
+        responses={
+            401: openapi.Response('401 : UNAUTHORIZED'),
+        }
     )
     def put(self, request, pk):
         post = self.get_queryset(pk)
@@ -228,7 +238,10 @@ class Update_Delete_Post(GenericAPIView):
 
         manual_parameters=[
             openapi.Parameter('id', openapi.IN_QUERY, "post_id", type=openapi.TYPE_INTEGER, required=True),
-        ]
+        ],
+        responses={
+            401: openapi.Response('401 : UNAUTHORIZED'),
+        }
     )
     def delete(self, request, pk):
         post = self.get_queryset(pk)
@@ -254,7 +267,7 @@ class Get_Deatail_Post(APIView):
         try:
             post = Post.objects.get(pk=pk)
         except Post.DoesNotExist:
-            raise ParseError({"error_code": 400, "message": "Not Found", "data": []})
+            raise ParseError({"error_code": 404, "message": "Not Found", "data": []})
         return post
 
     @swagger_auto_schema(
@@ -263,7 +276,10 @@ class Get_Deatail_Post(APIView):
 
         manual_parameters=[
             openapi.Parameter('id', openapi.IN_QUERY, "post_id", type=openapi.TYPE_INTEGER, required=True),
-        ]
+        ],
+        responses={
+            404: openapi.Response('404 : Not Found'),
+        }
     )
     def get(self, request, pk):
         post = self.get_queryset(pk)

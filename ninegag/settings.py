@@ -28,6 +28,7 @@ DEBUG = True
 # ALLOWED_HOSTS = []nothing to commit, working directory cleanSwitched to branch 'master'
 
 
+# ALLOWED_HOSTS = []
 ALLOWED_HOSTS = ['27.72.88.246',]
 
 
