@@ -215,8 +215,18 @@ class Update_Delete_Post(GenericAPIView):
     )
     def patch(self, request, pk):
         post = self.get_queryset(pk)
+        data = request.data.copy()
+        if not request.data.get('title'):
+            data.update({'title':post.title})
+        if not request.data.get('image'):
+            data.update({'image':post.image})
+        if not request.data.get('category'):
+            data.update({'category':post.category_id})
+            
         if request.user == post.author:
-            serializer = PostSerializers(post, data=request.data)
+            
+        
+            serializer = PostSerializers(post, data=data)
 
             if serializer.is_valid():
                 serializer.save()
