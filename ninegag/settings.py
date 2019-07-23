@@ -28,8 +28,8 @@ DEBUG = True
 # ALLOWED_HOSTS = []nothing to commit, working directory cleanSwitched to branch 'master'
 
 
-ALLOWED_HOSTS = []
-# ALLOWED_HOSTS = ['27.72.88.246',]
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['27.72.88.246',]
 
 
 # Application definition
@@ -159,8 +159,8 @@ DATABASES = {
         'NAME': '9gag',
         'USER': 'postgres',
         'PASSWORD': '10101997',
-        # 'HOST': 'db',
-        'HOST': 'localhost',
+        'HOST': 'db',
+        # 'HOST': 'localhost',
         'PORT': '5432'
     }
 }
