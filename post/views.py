@@ -213,7 +213,7 @@ class Update_Delete_Post(GenericAPIView):
             401: openapi.Response('401 : UNAUTHORIZED'),
         }
     )
-    def put(self, request, pk):
+    def patch(self, request, pk):
         post = self.get_queryset(pk)
         if request.user == post.author:
             serializer = PostSerializers(post, data=request.data)
