@@ -88,6 +88,10 @@ class Create(CreateAPIView):
             openapi.Parameter('title', openapi.IN_QUERY, "title", type=openapi.TYPE_STRING),
             openapi.Parameter('logo', openapi.IN_QUERY, "logo", type=openapi.TYPE_FILE),
         ],
+        responses={
+            400: openapi.Response('400_EMPTY : name or logo is empty <br/> 400_NAME_EXIST : category da ton tai'),
+            401: openapi.Response('401_SUPERUSER : UNAUTHORIZED'),
+        }
     )
     def post(self, request):
         name = self.get_queryset(request)
@@ -139,6 +143,10 @@ class Update_Delete(GenericAPIView):
             openapi.Parameter('logo', openapi.IN_QUERY, "logo", type=openapi.TYPE_FILE),
             openapi.Parameter('id', openapi.IN_QUERY, "category_id", type=openapi.TYPE_INTEGER, required=True),
         ],
+        responses={
+            400: openapi.Response('400_EMPTY : name or logo is empty <br/> 400_NAME_EXIST : category da ton tai'),
+            401: openapi.Response('401_SUPERUSER : UNAUTHORIZED'),
+        }
     )
     def put(self, request, pk):
         category = self.get_queryset(pk)
@@ -171,7 +179,10 @@ class Update_Delete(GenericAPIView):
 
         manual_parameters=[
             openapi.Parameter('id', openapi.IN_QUERY, "category_id", type=openapi.TYPE_INTEGER, required=True),
-        ]
+        ],
+        responses={
+            401: openapi.Response('401_SUPERUSER : UNAUTHORIZED'),
+        }
     )
     def delete(self, request, pk):
         category = self.get_queryset(pk)
