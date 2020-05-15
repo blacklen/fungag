@@ -1,0 +1,12 @@
+@import 'common';
+
+@import 'components/header';
+@import 'components/footer';
+@import 'components/menu';
+
+@import 'dialogs/snackbar';
+
+@import 'pages/index';
+
+@import "../node_modules/bulma/bulma.sass";
+@import '../node_modules/bulma-helpers/bulma-helpers.sass';
