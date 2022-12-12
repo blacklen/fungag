@@ -21,7 +21,7 @@
     "bulma-helpers": "^0.3.8",
     "clsx": "^1.0.4",
     "cookie-parser": "^1.4.4",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "form-data": "^2.3.3",
     "formik": "^1.5.7",
     "http-proxy-middleware": "^0.19.1",
